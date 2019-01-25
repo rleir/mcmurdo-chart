@@ -21,7 +21,6 @@ function ready (err, data) {
 	.attr("transform",function(d,i){
 	    var chart = radialBarChart()
 		.barHeight(110)
-		.translt( {top: 20, right: 20, bottom: 20, left: 60})
 		.reverseLayerOrder(true)
 		.barColors(['#EEB945', '#E67323'])  // Yellow/orange
 		.domain([0,17])
