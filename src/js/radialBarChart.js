@@ -40,8 +40,7 @@ function radialBarChart() {
   function initChart(container) {
     var g = d3.select(container)
       .append('g')
-      .classed('radial-barchart', true)
-        .attr('transform', svgTranslate(margin.left + barHeight, margin.top + barHeight));
+      .classed('radial-barchart', true) ;
 
     // Concentric circles at specified tick values
     g.append('g')
