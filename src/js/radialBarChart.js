@@ -39,9 +39,6 @@ function radialBarChart() {
 
   function initChart(container) {
     var g = d3.select(container)
-      .append('svg')
-      .style('width', 2 * barHeight + margin.left + margin.right + 'px')
-      .style('height', 2 * barHeight + margin.top + margin.bottom + 'px')
       .append('g')
       .classed('radial-barchart', true)
         .attr('transform', svgTranslate(margin.left + barHeight, margin.top + barHeight));
