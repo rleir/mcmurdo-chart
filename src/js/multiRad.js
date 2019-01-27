@@ -18,7 +18,7 @@ var positions = [{"x":150, "y":550},
 var svgDoc = d3.select("#chart svg");
 
 function ready (err, data) {
-
+//zzz    console.log(data);
     //create basic radbars
     svgDoc
 	.append("g").selectAll("g")
@@ -29,12 +29,17 @@ function ready (err, data) {
 	    var chart = radialBarChart()
 		.barHeight(60)
 		.reverseLayerOrder(true)
-		.barColors(['#EEB945', '#E67323'])  // Yellow/orange
+		.barColors([
+		    '#EEB945',
+		    '#E67323',
+		    '#B66199',
+		    '#9392CB',
+		    '#76D9FA'])  // Yellow/orange/mauve/purple/blue
 		.domain([0,17])
-		.tickValues([5,10,15])
-		.tickCircleValues([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]);
+		.tickValues([5,10])
+		.tickCircleValues([1,2,3,4,5,6,7,8,9,10]);
 	    d3.select(this)
-		.datum(data)
+		.datum(eval("data.l" + i))
 		.call(chart);
             return "translate(" + d.x + " " + d.y + ")"
 	});
