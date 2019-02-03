@@ -14,6 +14,8 @@ import csv
 import json
 import copy
 
+ROW_LIMIT = 8
+
 def chart_by_mapsite(year):
     input_file = 'three_sites_' + year + '.csv'
 
@@ -40,9 +42,12 @@ def chart_by_mapsite(year):
         with open(input_file, newline='') as csvfile:
             input_data = csv.DictReader(csvfile)
             radial_data = {}
+            iter=0
             for row in input_data:
                 # OrderedDict([('organism', 'Capitella perarmata'), ('CinderCones', '0.000'), ('Outfall', '17.118'), ('Armitage', '0.000')])
-
+                iter += 1
+                if iter > ROW_LIMIT :
+                    break
                 keys = list(row.keys())
                 organism_name = row['abbr']
                 if site in keys:
