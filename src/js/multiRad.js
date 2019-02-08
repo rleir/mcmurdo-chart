@@ -1,17 +1,17 @@
 'use strict';
 
-var positions = [{"x":150, "y":550, "name": "CinderCones"},
-		 {"x":300, "y":150, "name": "WinterQuartersInner"},
-		 {"x":310, "y":250, "name": "WinterQuartersMiddle"},
-		 {"x":310, "y":310, "name": "WinterQuartersOuter"},
-		 {"x":440, "y":410, "name": "Outfall"},
-		 {"x":500, "y":450, "name": "OutfallA"},
-		 {"x":500, "y":450, "name": "OutfallB"},
-		 {"x":520, "y":450, "name": "Transition"},
-		 {"x":650, "y":490, "name": "Road"},
-		 {"x":700, "y":500, "name": "JettyN"},
-		 {"x":800, "y":560, "name": "JettyS"},
-		 {"x":870, "y":580, "name": "Armitage"}
+var positions = [{"x":150, "y":550, "placeName": "CinderCones"},
+		 {"x":300, "y":150, "placeName": "WinterQuartersInner"},
+		 {"x":310, "y":250, "placeName": "WinterQuartersMiddle"},
+		 {"x":310, "y":310, "placeName": "WinterQuartersOuter"},
+		 {"x":440, "y":410, "placeName": "Outfall"},
+		 {"x":500, "y":450, "placeName": "OutfallA"},
+		 {"x":500, "y":450, "placeName": "OutfallB"},
+		 {"x":520, "y":450, "placeName": "Transition"},
+		 {"x":650, "y":490, "placeName": "Road"},
+		 {"x":700, "y":500, "placeName": "JettyN"},
+		 {"x":800, "y":560, "placeName": "JettyS"},
+		 {"x":870, "y":580, "placeName": "Armitage"}
 		];
 var formSelect = d3.select("#year-select");
 var formButton = d3.select("#a-button");
@@ -62,8 +62,8 @@ loadData(formSelect.node().value);
 //locate main svg element
 var svgDoc = d3.select("#chart svg");
 
-function ready (err, yearData) {
-//zzz    console.log(yearData);
+function ready (err, data) {
+//zzz    console.log(data);
     //create basic radbars
     //	    d3.select(this)
     svgDoc
@@ -71,7 +71,7 @@ function ready (err, yearData) {
 	.data(positions)
 	.enter()
 	.append("g")
-	.attr("transform",function(positns,i){
+	.attr("transform",function(d,i){
 	    var chart = radialBarChart()
 		.barHeight(60)
 		.reverseLayerOrder(true)
@@ -85,9 +85,9 @@ function ready (err, yearData) {
 		.tickValues([5,10])
 		.tickCircleValues([1,2,3,4,5,6,7,8,9,10]);
 	    d3.select(this)
-		.datum(eval("yearData." + positns.name)) // i specifies the location
+		.datum(eval("data." + d.placeName)) // i specifies the location
 		.call(chart);
-	    return "translate(" + positns.x + " " + positns.y + ")"
+            return "translate(" + d.x + " " + d.y + ")"
 	});
 }
     
