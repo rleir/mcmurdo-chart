@@ -15,7 +15,12 @@ var positions = [{"x":150, "y":550, "placeName": "CinderCones"},
                 ];
 var formSelect = d3.select("#year-select");
 var formButton = d3.select("#a-button");
+// var formButton = d3.select("#a-button").onclick( function(d){
+// d3.event.preventDefault();}); this would replace the following 3 lines
 
+document.getElementById("a-button").addEventListener("click", function(event){
+    event.preventDefault()
+});
 
 formButton.on("click", function() {
     var year = formSelect.node().value;
