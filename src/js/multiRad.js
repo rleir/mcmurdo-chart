@@ -43,7 +43,6 @@ formButton.on("click", function() {
     } else if(year == "2011"){
         year = "1988";
     }
-    console.log("buttonv  "+year);
 
     // update the selector
     var e = document.getElementById('year-select');
@@ -56,7 +55,6 @@ formButton.on("click", function() {
 
 formSelect.on("change", function() {
     var year = this.value;
-    console.log("selectv  "+year);
 //    formSelect.value = year;
     loadData(year);
 });
@@ -68,7 +66,6 @@ loadData(formSelect.node().value);
 var svgDoc = d3.select("#chart svg");
 
 function ready (err, data) {
-//zzz    console.log(data);
     //create basic radbars
     // d3.select(this)
     svgDoc
@@ -76,6 +73,7 @@ function ready (err, data) {
         .data(positions)
         .enter()
         .append("g")
+        .classed('radial-parent', true)
         .attr("transform",function(d,i){
             var chart = radialBarChart()
                 .barHeight(60)
@@ -89,15 +87,38 @@ function ready (err, data) {
                 .domain([0,17])
                 .tickValues([5,10])
                 .tickCircleValues([1,2,3,4,5,6,7,8,9,10]);
+            positions[i].chart = chart;
             d3.select(this)
-                .datum(eval("data." + d.placeName)) // i specifies the location
+                .datum(eval("data." + d.placeName))
                 .call(chart);
             return "translate(" + d.x + " " + d.y + ")"
-    });
+        });
+
+    svgDoc
+        .selectAll("g.radial-parent")
+        .each(function(p, i) {
+            console.log("this6"); 
+                console.log(         // gives two g nodes, is radial-barchart  zzzz zzzz necessary code?????
+                    d3.select(this)
+                        .selectAll(".radial-barchart")
+                        .text(function(d, i) {
+                            return "child " + d.placeName + " of " + p.placeName;  // d.pl often undefined, p.pla repeats
+                        }));
+        });
+
+    svgDoc
+        .selectAll("g.radial-parent")
+        .data(positions)
+        .each(function(p, i) {
+//            var d = positions[i];
+            d3.select(this)
+                .selectAll(".radial-barchart")
+                .datum(eval("data." + p.placeName)) 
+                .call(p.chart);
+        });
 }
     
 function loadData(year) {
-    console.log("loadv  "+year);
     var filename = 'data/chart_by_mapsite_' + year + '.json'
     d3.json(filename, ready);
 }
