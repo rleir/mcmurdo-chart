@@ -10,7 +10,8 @@ function radialBarChart() {
   var tickValues = undefined;
   var colorLabels = false;
   var tickCircleValues = [];
-  var transitionDuration = 1000;
+//  var transitionDuration = 1000;
+  var transitionDuration = 0;
 
   // Scales & other useful things
   var numBars = null;
