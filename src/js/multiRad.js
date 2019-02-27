@@ -66,14 +66,13 @@ loadData(formSelect.node().value);
 var svgDoc = d3.select("#chart svg");
 
 function ready (err, data) {
-    //create basic radbars
-    // d3.select(this)
+    // create initial radial-barcharts
     svgDoc
         .selectAll("g")
         .data(positions)
         .enter()
         .append("g")
-        .classed('radial-parent', true)
+        .classed('radial-parent', true) // 1
         .attr("transform",function(d,i){
             var chart = radialBarChart()
                 .barHeight(60)
@@ -94,25 +93,13 @@ function ready (err, data) {
             return "translate(" + d.x + " " + d.y + ")"
         });
 
-    svgDoc
-        .selectAll("g.radial-parent")
-        .each(function(p, i) {
-            console.log("this6"); 
-                console.log(         // gives two g nodes, is radial-barchart  zzzz zzzz necessary code?????
-                    d3.select(this)
-                        .selectAll(".radial-barchart")
-                        .text(function(d, i) {
-                            return "child " + d.placeName + " of " + p.placeName;  // d.pl often undefined, p.pla repeats
-                        }));
-        });
-
+    // update existing radial-barcharts
+    // zzzz first time, this is overwriting
     svgDoc
         .selectAll("g.radial-parent")
         .data(positions)
         .each(function(p, i) {
-//            var d = positions[i];
             d3.select(this)
-                .selectAll(".radial-barchart")
                 .datum(eval("data." + p.placeName)) 
                 .call(p.chart);
         });
