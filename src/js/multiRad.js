@@ -78,13 +78,17 @@ function ready (err, data) {
                 .barHeight(60)
                 .reverseLayerOrder(true)
                 .barColors([
-                    '#EEB945',
-                    '#E67323',
-                    '#B66199',
-                    '#9392CB',
-                    '#76D9FA'])  // Yellow/orange/mauve/purple/blue
-                .domain([0,17])
-                .tickValues([5,10])
+                    '#EEB945', // Capi  /Yellow
+                    '#E67323', // Aphe  /orange
+                    '#B66199', // Gala  /mauve
+                    '#9392CB', // Spio  /purple
+                    '#76D9FA', // Noto  /blue
+                    '#ce4b46', // Ophr  /ochre
+                    '#aa79c1', // Phil  /purple
+                    '#9ab661'  // Edwa  /green
+                ])  
+                .domain([0,30])
+                .tickValues([5,10,15,20,25])
                 .tickCircleValues([1,2,3,4,5,6,7,8,9,10]);
             positions[i].chart = chart;
             d3.select(this)
