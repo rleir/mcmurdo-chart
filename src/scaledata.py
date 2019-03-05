@@ -45,22 +45,11 @@ def readfiles():
         for sheet in wb.sheets():
             shname = sheet.name
             if shname.endswith("final averages"):
+                coltoyear=[] 
                 for row in range(sheet.nrows):
                     if row == 1:
-                        for col in range(sheet.ncols):
-                            colheader = sheet.cell(row,col).value
-                            if col == 0:
-                                print(colheader)
-                            else:
-                                if colheader.endswith("-ave"):
-                                    year = colheader[-6:-4]
-                                    if int(year) > 80:
-                                        year = "19"+year
-                                    else:
-                                        year = "20"+year
-                                    print(year)
-                                        
-                    else:
+                        coltoyear = readheader(sheet,row)
+                    elif row > 1:  # skip row 0
                         values = []
                         for col in range(sheet.ncols):
                             if col == 0:
@@ -82,7 +71,25 @@ def readfiles():
 #for i in range(sheet.ncols):
 # print sheet.cell_type(1,i),sheet.cell_value(1,i)
 
-
+def readheader(sheet,row):
+    coltoyear=[]
+    for col in range(sheet.ncols):
+        colheader = sheet.cell(row,col).value
+        if col == 0:
+            coltoyear.append(0) 
+        else:
+            if colheader.endswith("-ave"):
+                year = colheader[-6:-4]
+                if int(year) > 80:
+                    year = "19"+year
+                else:
+                    year = "20"+year
+                coltoyear.append(year)
+            else:
+                coltoyear.append(0) 
+                
+    print(coltoyear)
+    return coltoyear
 
 
 ROW_LIMIT = 8
