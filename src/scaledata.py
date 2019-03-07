@@ -21,52 +21,98 @@ __status__ = "Production"
 
 from xlrd import open_workbook
 
-
 input_files = [ "Cape Armitage 1988-2014.xls",
                 "Cinder Cones 1988-2014.xls",
                 "Outfall 1988-2014.xls"]
 
-featured_species= [
-    "Capitella perarmata",
-    "Aphelochaeta sp", 
-    "Galathowenia scotiae",
-    "Spiophanes tcherniai",
-    "Nototanais dimorphus",
-    "Ophryotrocha notialis SUM",
-    "Philomedes spp.",
-    "Edwardsia meridionalis"]
+featured_species= {
+    "Capitella perarmata": "Capi",
+    "Aphelochaeta sp": "Aphe", 
+    "Galathowenia scotiae": "Gala",
+    "Spiophanes tcherniai": "Spio",
+    "Nototanais dimorphus": "Noto",
+    "Ophryotrocha notialis SUM": "Ophr",
+    "Philomedes spp.": "Phil",
+    "Edwardsia meridionalis": "Edwa"
+    }
+
+years_with_complete_data=['1988', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011']
+
+all_years = [ '1988', '1990', '1991', '1992', '1993', '1997', '1998', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011', '2012', '2014']
+all_sites = [ "CinderCones",
+              "WinterQuartersInner",
+              "WinterQuartersMiddle",
+              "WinterQuartersOuter",
+              "Outfall",
+              "OutfallA",
+              "OutfallB",
+              "Transition",
+              "Road",
+              "JettyN",
+              "JettyS",
+              "Armitage"]
+site_names = {
+    "Cinder Cones - 13250 m": "CinderCones",
+     "WQI   ":              "WinterQuartersInner",
+     "WQM   ":              "WinterQuartersMiddle",
+     "WQO   ":              "WinterQuartersOuter",
+     "Outfall - 0 m":              "Outfall",
+     "OA   ":              "OutfallA",
+     "OB   ":              "OutfallB",
+     "T   ":              "Transition",
+     "R   ":              "Road",
+     "JN   ":              "JettyN",
+     "JS   ":              "JettyS",
+     "CA: 1000 m":              "Armitage"}
+#     CA: 1000 m
+site_keys = list(site_names.keys())
+species_keys = list(featured_species.keys())
+
+all_data   = {}
+for year in all_years:
+    all_data[year] = {}
+
+    for site_key in site_keys:
+        site = site_names[site_key]
+        all_data[year][site] = []
+        all_data[year][site].append({})
+        all_data[year][site][0]["data"]={}
+        for species in species_keys:
+            abbr = featured_species[species]
+            all_data[year][site][0]["data"][abbr]=-10.0
+
 
 def readfiles():
+
     for file in input_files:
         path = "data/"+file
         # read xls, find avg sheet
-
         wb = open_workbook(path)
         for sheet in wb.sheets():
             shname = sheet.name
             if shname.endswith("final averages"):
-                coltoyear=[] 
+                coltoyear=[]           # zzz needs saving somewhere
+                site = ""
                 for row in range(sheet.nrows):
+                    if row == 0:
+                        site_key = sheet.cell(0,0).value
+                        site = site_names[site_key]
                     if row == 1:
                         coltoyear = readheader(sheet,row)
-                    elif row > 1:  # skip row 0
-                        values = []
+                    else:
                         for col in range(sheet.ncols):
                             if col == 0:
                                 species = sheet.cell(row,col).value
-                                if species in featured_species:
-                                    print(sheet.cell(row,col).value)
-                        #                        values.append(sheet.cell(row,col).value)
-#                        print(sheet.cell(row,col))
-#                    print (','.join(values))
-                print()
-
-#text:'CA14-ave'
-#text:'CA14-se'
-#text:'Laternula elliptica'
-#number:1.5
-#number:0.7637626158259734
-#number:0.8333333333333334
+                                if species not in featured_species:
+                                    continue
+                                else:
+                                    for datacol in range(sheet.ncols):
+                                        if datacol > 0 and datacol%2 == 1:
+                                            print(coltoyear,datacol)
+                                            year = coltoyear[datacol]
+                                            abbr = featured_species[species]
+                                            print(year,site,abbr,row,datacol)
+                                            all_data[year][site][0]["data"][abbr] = sheet.cell(row,datacol).value
 
 #for i in range(sheet.ncols):
 # print sheet.cell_type(1,i),sheet.cell_value(1,i)
@@ -79,6 +125,8 @@ def readheader(sheet,row):
             coltoyear.append(0) 
         else:
             if colheader.endswith("-ave"):
+                if col%2 == 0:
+                    print("error, ave in col "+str(col))
                 year = colheader[-6:-4]
                 if int(year) > 80:
                     year = "19"+year
@@ -86,6 +134,8 @@ def readheader(sheet,row):
                     year = "20"+year
                 coltoyear.append(year)
             else:
+                if col%2 == 1:
+                    print("error, no ave in col "+str(col))
                 coltoyear.append(0) 
                 
     print(coltoyear)
