@@ -19,6 +19,7 @@ __maintainer__ = "Richard Leir"
 __email__ = "rleir at leirtech ddot com"
 __status__ = "Production"
 
+import csv
 from xlrd import open_workbook
 
 input_files = [ "Cape Armitage 1988-2014.xls",
@@ -64,25 +65,28 @@ site_names = {
      "JN   ":              "JettyN",
      "JS   ":              "JettyS",
      "CA: 1000 m":              "Armitage"}
-#     CA: 1000 m
+
 site_keys = list(site_names.keys())
 species_keys = list(featured_species.keys())
 
 all_data   = {}
-for year in all_years:
-    all_data[year] = {}
-
-    for site_key in site_keys:
-        site = site_names[site_key]
-        all_data[year][site] = []
-        all_data[year][site].append({})
-        all_data[year][site][0]["data"]={}
-        for species in species_keys:
-            abbr = featured_species[species]
-            all_data[year][site][0]["data"][abbr]=-10.0
 
 
-def readfiles():
+def initData():
+    for year in all_years:
+        all_data[year] = {}
+
+        for site_key in site_keys:
+            site = site_names[site_key]
+            all_data[year][site] = []
+            all_data[year][site].append({})
+            all_data[year][site][0]["data"]={}
+            for species in species_keys:
+                abbr = featured_species[species]
+                all_data[year][site][0]["data"][abbr]=-10.0
+
+
+def readFiles():
 
     for file in input_files:
         path = "data/"+file
@@ -97,7 +101,7 @@ def readfiles():
                     if row == 0:
                         site_key = sheet.cell(0,0).value
                         site = site_names[site_key]
-                    if row == 1:
+                    elif row == 1:
                         coltoyear = readheader(sheet,row)
                     else:
                         for col in range(sheet.ncols):
@@ -106,16 +110,26 @@ def readfiles():
                                 if species not in featured_species:
                                     continue
                                 else:
+                                    abbr = featured_species[species]
                                     for datacol in range(sheet.ncols):
                                         if datacol > 0 and datacol%2 == 1:
-                                            print(coltoyear,datacol)
                                             year = coltoyear[datacol]
-                                            abbr = featured_species[species]
-                                            print(year,site,abbr,row,datacol)
                                             all_data[year][site][0]["data"][abbr] = sheet.cell(row,datacol).value
+def writeFiles():
+    for year in all_years:
+        # write output
+        output_file = "all_sites_" + str(year) + ".csv"
 
-#for i in range(sheet.ncols):
-# print sheet.cell_type(1,i),sheet.cell_value(1,i)
+        with open(output_file, 'w', newline='') as csvfile:
+            fieldnames = ["organism","abbr"] + all_sites 
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for species_key in species_keys:
+                abbr = featured_species[ species_key]
+                row_data = {'organism': species_key, 'abbr': abbr}
+                for site in all_sites:
+                    row_data[site] =        all_data[year][site][0]["data"][abbr] 
+                writer.writerow(row_data)
 
 def readheader(sheet,row):
     coltoyear=[]
@@ -138,7 +152,6 @@ def readheader(sheet,row):
                     print("error, no ave in col "+str(col))
                 coltoyear.append(0) 
                 
-    print(coltoyear)
     return coltoyear
 
 
@@ -146,7 +159,10 @@ ROW_LIMIT = 8
 
 if __name__ == "__main__":
     # execute only if run as a script
-    readfiles()
+
+    initData()
+    readFiles()
+    writeFiles()
     
 
 
