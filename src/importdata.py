@@ -17,7 +17,7 @@ import copy
 ROW_LIMIT = 8
 
 def chart_by_mapsite(year):
-    input_file = 'three_sites_' + year + '.csv'
+    input_file = 'all_sites_' + year + '.csv'
 
     output_file = 'data/chart_by_mapsite_' + year + '.json'
     all_data   = {}
