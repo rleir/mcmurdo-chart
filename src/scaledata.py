@@ -80,10 +80,12 @@ def initData():
             site = site_names[site_key]
             all_data[year][site] = []
             all_data[year][site].append({})
-            all_data[year][site][0]["data"]={}
+            all_data[year][site][0]["data"   ]={}
+            all_data[year][site][0]["average"]={}
             for species in species_keys:
                 abbr = featured_species[species]
-                all_data[year][site][0]["data"][abbr]=-10.0
+                all_data[year][site][0]["data"][abbr]=0
+                all_data[year][site][0]["average"][abbr]=-10
 
 
 def readFiles():
@@ -114,7 +116,47 @@ def readFiles():
                                     for datacol in range(sheet.ncols):
                                         if datacol > 0 and datacol%2 == 1:
                                             year = coltoyear[datacol]
-                                            all_data[year][site][0]["data"][abbr] = sheet.cell(row,datacol).value
+                                            all_data[year][site][0]["average"][abbr] = sheet.cell(row,datacol).value
+
+def scaleData():
+    max_average   = {}
+    running_count = {}
+    for species_key in species_keys:
+        max_average  [species_key] = 0
+        running_count[species_key] = 0
+
+    # find the max average for each species
+    for year in all_years:
+        for site_key in site_keys:
+            site = site_names[site_key]
+            for species_key in species_keys:
+                abbr = featured_species[species_key]
+                replicates_average = all_data[year][site][0]["average"][abbr]
+                if  max_average[  species_key] < replicates_average :
+                    max_average[  species_key] = replicates_average
+                    running_count[species_key] += 1
+
+    for species_key in species_keys:
+        if max_average[species_key] <= 0 :
+            print("error, running count 0 " + species_key)
+        if running_count[species_key] <= 0 :
+            print("error, running count 0 " + species_key)
+ 
+    # scale all the data in the range 0 to 100 where 100 represents the max average 
+    for year in all_years:
+        for site_key in site_keys:
+            site = site_names[site_key]
+            for species_key in species_keys:
+                abbr = featured_species[species_key]
+                replicates_average = all_data[year][site][0]["average"][abbr]
+                max_avg = max_average[  species_key]
+
+                display = -10.0
+                if replicates_average > -10 :
+                    #display = replicates_average*100 / (max_avg+0.00001)
+                    display = replicates_average*100 / max_avg
+                all_data[year][site][0]["data"][abbr] = display
+
 def writeFiles():
     for year in all_years:
         # write output
@@ -162,6 +204,7 @@ if __name__ == "__main__":
 
     initData()
     readFiles()
+    scaleData()
     writeFiles()
     
 
