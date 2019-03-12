@@ -158,7 +158,7 @@ def scaleData():
 def writeFiles():
     for year in all_years:
         # write output
-        output_file = "all_sites_" + str(year) + ".csv"
+        output_file = "data/all_sites_" + str(year) + ".csv"
 
         with open(output_file, 'w', newline='') as csvfile:
             fieldnames = ["organism","abbr"] + all_sites 
@@ -195,7 +195,6 @@ def readheader(sheet,row):
     return coltoyear
 
 
-ROW_LIMIT = 8
 
 if __name__ == "__main__":
     # execute only if run as a script

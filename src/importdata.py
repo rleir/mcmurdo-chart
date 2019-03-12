@@ -15,9 +15,10 @@ import json
 import copy
 
 ROW_LIMIT = 8
+all_years = [ '1988', '1990', '1991', '1992', '1993', '1997', '1998', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011', '2012', '2014']
 
 def chart_by_mapsite(year):
-    input_file = 'all_sites_' + year + '.csv'
+    input_file = 'data/all_sites_' + year + '.csv'
 
     output_file = 'data/chart_by_mapsite_' + year + '.json'
     all_data   = {}
@@ -71,5 +72,6 @@ if __name__ == "__main__":
 
     years_with_complete_data=['1988', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011']
 
-    for year in years_with_complete_data:
+#    for year in years_with_complete_data:
+    for year in all_years:
         chart_by_mapsite(year)
