@@ -20,6 +20,7 @@ __email__ = "rleir at leirtech ddot com"
 __status__ = "Production"
 
 import csv
+import glob
 from xlrd import open_workbook
 
 input_files = [ "Cape Armitage 1988-2014.xls",
@@ -37,35 +38,24 @@ featured_species= {
     "Edwardsia meridionalis": "Edwa"
     }
 
-years_with_complete_data=['1988', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011']
+# years_with_complete_data=['1988', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011']
 
 all_years = [ '1988', '1990', '1991', '1992', '1993', '1997', '1998', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011', '2012', '2014']
-all_sites = [ "CinderCones",
-              "WinterQuartersInner",
-              "WinterQuartersMiddle",
-              "WinterQuartersOuter",
-              "Outfall",
-              "OutfallA",
-              "OutfallB",
-              "Transition",
-              "Road",
-              "JettyN",
-              "JettyS",
-              "Armitage"]
-site_names = {
-    "Cinder Cones - 13250 m": "CinderCones",
-     "WQI   ":              "WinterQuartersInner",
-     "WQM   ":              "WinterQuartersMiddle",
-     "WQO   ":              "WinterQuartersOuter",
-     "Outfall - 0 m":              "Outfall",
-     "OA   ":              "OutfallA",
-     "OB   ":              "OutfallB",
-     "T   ":              "Transition",
-     "R   ":              "Road",
-     "JN   ":              "JettyN",
-     "JS   ":              "JettyS",
-     "CA: 1000 m":              "Armitage"}
 
+site_names = {
+    "Cinder Cones - 13250 m":              "CinderCones",
+    "Winter Quarters Bay Inner -330 m":    "WinterQuartersInner",
+    "Winter Quarters Bay Middle -200 m":   "WinterQuartersMiddle",
+    "Winter Quarters Bay Outer -170 m":    "WinterQuartersOuter",
+    "Outfall - 0 m":                       "Outfall",
+    "Outfall South A 115 m":               "OutfallA",
+    "Outfall South B 166 m":               "OutfallB",
+    "Transition 250 m":                    "Transition",
+    "Road 290 m":                          "Road",
+    "Jetty North 420 m":                   "JettyN",
+    "Jetty South 434 m":                   "JettyS",
+    "CA: 1000 m":                          "Armitage"}
+all_sites = list(site_names.values())
 site_keys = list(site_names.keys())
 species_keys = list(featured_species.keys())
 
@@ -90,18 +80,23 @@ def initData():
 
 def readFiles():
 
-    for file in input_files:
-        path = "data/"+file
+    input_files = glob.glob('data/*.xls')
+    for path in input_files:
         # read xls, find avg sheet
         wb = open_workbook(path)
+        final_av_s_found = 0
         for sheet in wb.sheets():
             shname = sheet.name
             if shname.endswith("final averages"):
+                final_av_s_found = 1
                 coltoyear=[]           # zzz needs saving somewhere
                 site = ""
                 for row in range(sheet.nrows):
                     if row == 0:
                         site_key = sheet.cell(0,0).value
+                        # is this an expected value?
+                        if not site_key in site_names :
+                            print("unexpected site name " + site_key + " in " + path)
                         site = site_names[site_key]
                     elif row == 1:
                         coltoyear = readheader(sheet,row)
@@ -117,7 +112,10 @@ def readFiles():
                                         if datacol > 0 and datacol%2 == 1:
                                             year = coltoyear[datacol]
                                             all_data[year][site][0]["average"][abbr] = sheet.cell(row,datacol).value
+        if final_av_s_found == 0 :
+            print("final averages sheet not found in " + path)
 
+                                            
 def scaleData():
     max_average   = {}
     running_count = {}
