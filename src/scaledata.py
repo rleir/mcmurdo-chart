@@ -20,6 +20,7 @@ __email__ = "rleir at leirtech ddot com"
 __status__ = "Production"
 
 import csv
+import json
 import glob
 from xlrd import open_workbook
 
@@ -39,8 +40,7 @@ featured_species= {
     }
 
 # years_with_complete_data=['1988', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011']
-
-all_years = [ '1988', '1990', '1991', '1992', '1993', '1997', '1998', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011', '2012', '2014']
+all_years = [ ]
 
 site_names = {
     "Cinder Cones - 13250 m":              "CinderCones",
@@ -63,6 +63,10 @@ all_data   = {}
 
 
 def initData():
+    global all_years
+    with open("data/allyears.json") as json_file:
+        all_years= json.load( json_file)
+
     for year in all_years:
         all_data[year] = {}
 
