@@ -6,12 +6,12 @@ var positions = [{"x":150, "y":550, "placeName": "CinderCones"},
                  {"x":310, "y":310, "placeName": "WinterQuartersOuter"},
                  {"x":440, "y":410, "placeName": "Outfall"},
                  {"x":500, "y":450, "placeName": "OutfallA"},
-                 {"x":500, "y":450, "placeName": "OutfallB"},
-                 {"x":520, "y":450, "placeName": "Transition"},
-                 {"x":650, "y":490, "placeName": "Road"},
-                 {"x":700, "y":500, "placeName": "JettyN"},
-                 {"x":800, "y":560, "placeName": "JettyS"},
-                 {"x":870, "y":580, "placeName": "Armitage"}
+                 {"x":520, "y":450, "placeName": "OutfallB"},
+                 {"x":650, "y":490, "placeName": "Transition"},
+                 {"x":700, "y":500, "placeName": "Road"},
+                 {"x":800, "y":560, "placeName": "JettyN"},
+                 {"x":870, "y":580, "placeName": "JettyS"},
+                 {"x":1070,"y":780, "placeName": "Armitage"}
                 ];
 var formSelect = d3.select("#year-select");
 var formButton = d3.select("#a-button");
