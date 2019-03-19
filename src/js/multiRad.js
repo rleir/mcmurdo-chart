@@ -22,28 +22,33 @@ document.getElementById("a-button").addEventListener("click", function(event){
     event.preventDefault()
 });
 
+var all_years ;
+d3.json( "data/allyears.json", function(err, data) {
+    all_years = data;
+});
+
+
 formButton.on("click", function() {
     var year = formSelect.node().value;
-    if(year == "1988"){
-        year = "2002";
-    } else if(year == "2002"){
-        year = "2003";
-    } else if(year == "2003"){
-        year = "2004";
-    } else if(year == "2004"){
-        year = "2007";
-    } else if(year == "2007"){
-        year = "2008";
-    } else if(year == "2008"){
-        year = "2009";
-    } else if(year == "2009"){
-        year = "2010";
-    } else if(year == "2010"){
-        year = "2011";
-    } else if(year == "2011"){
-        year = "1988";
-    }
 
+    //find next in year array
+    // note that this algo does not scale
+    var x=0;
+    var ay_len = all_years.length;
+    while ( all_years[x] != year){
+        x += 1;
+        if(x >= ay_len || x > 100){
+            return;
+        }
+    }
+    //when end, restart
+    if(x+1 >= ay_len){
+        x=0
+    } else {
+        x=x+1
+    }
+    year = all_years[x];
+    
     // update the selector
     var e = document.getElementById('year-select');
     if(e) e.value = year;
