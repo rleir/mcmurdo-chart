@@ -40,7 +40,8 @@ all_years = [ ]
 
 # Site name keys below match the column headers in the input xlsx
 site_names = {
-    "CCN":    "Cinder Cones - 13250 m",
+    "TR":   "Turtle Rock -13250 m",
+    "CCN":  "Cinder Cones -5000 m",
     "WQBI": "Winter Quarters Bay Inner -330 m",
     "WQM":    "Winter Quarters Bay Middle -200 m",
     "WQBO": "Winter Quarters Bay Outer -170 m",
@@ -49,7 +50,7 @@ site_names = {
     "OSB":    "Outfall South B 166 m",
     "Trans":  "Transition 250 m",
     "Road":  "Road 290 m",
-    "TR": "Jetty North 420 m",
+    "JetN": "Jetty North 420 m",
     "JetS": "Jetty South 434 m",
     "CA":     "CA: 1000 m"}
 

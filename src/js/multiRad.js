@@ -9,7 +9,7 @@ var positions = [{"x":150, "y":550, "placeName": "CCN"},
                  {"x":520, "y":450, "placeName": "OSB"},
                  {"x":650, "y":490, "placeName": "Trans"},
                  {"x":700, "y":500, "placeName": "Road"},
-                 {"x":800, "y":560, "placeName": "TR"},
+                 {"x":800, "y":560, "placeName": "JetN"},
                  {"x":870, "y":580, "placeName": "JetS"},
                  {"x":1070,"y":780, "placeName": "CA"}
                 ];
