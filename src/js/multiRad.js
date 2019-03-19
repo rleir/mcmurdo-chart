@@ -1,17 +1,17 @@
 'use strict';
 
-var positions = [{"x":150, "y":550, "placeName": "CinderCones"},
-                 {"x":300, "y":150, "placeName": "WinterQuartersInner"},
-                 {"x":310, "y":250, "placeName": "WinterQuartersMiddle"},
-                 {"x":310, "y":310, "placeName": "WinterQuartersOuter"},
-                 {"x":440, "y":410, "placeName": "Outfall"},
-                 {"x":500, "y":450, "placeName": "OutfallA"},
-                 {"x":520, "y":450, "placeName": "OutfallB"},
-                 {"x":650, "y":490, "placeName": "Transition"},
+var positions = [{"x":150, "y":550, "placeName": "CCN"},
+                 {"x":300, "y":150, "placeName": "WQBI"},
+                 {"x":310, "y":250, "placeName": "WQM"},
+                 {"x":310, "y":310, "placeName": "WQBO"},
+                 {"x":440, "y":410, "placeName": "Out"},
+                 {"x":500, "y":450, "placeName": "OSA"},
+                 {"x":520, "y":450, "placeName": "OSB"},
+                 {"x":650, "y":490, "placeName": "Trans"},
                  {"x":700, "y":500, "placeName": "Road"},
-                 {"x":800, "y":560, "placeName": "JettyN"},
-                 {"x":870, "y":580, "placeName": "JettyS"},
-                 {"x":1070,"y":780, "placeName": "Armitage"}
+                 {"x":800, "y":560, "placeName": "TR"},
+                 {"x":870, "y":580, "placeName": "JetS"},
+                 {"x":1070,"y":780, "placeName": "CA"}
                 ];
 var formSelect = d3.select("#year-select");
 var formButton = d3.select("#a-button");

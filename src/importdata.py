@@ -22,18 +22,18 @@ def chart_by_mapsite(year):
 
     output_file = 'data/chart_by_mapsite_' + year + '.json'
     all_data   = {}
-    all_sites = [ "CinderCones",
-                  "WinterQuartersInner",
-                  "WinterQuartersMiddle",
-                  "WinterQuartersOuter",
-                  "Outfall",
-                  "OutfallA",
-                  "OutfallB",
-		  "Transition",
+    all_sites = [ "CCN",
+                  "WQBI",
+                  "WQM",
+                  "WQBO",
+                  "Out",
+                  "OSA",
+                  "OSB",
+                  "Trans",
                   "Road",
-		  "JettyN",
-		  "JettyS",
-		  "Armitage"]
+                  "TR",
+                  "JetS",
+                  "CA"]
 
     # foreach site
     #   foreach organism
