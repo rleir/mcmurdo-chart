@@ -164,7 +164,7 @@ def scaleData():
                     print("max_avg="+ max_average[  abbr] + " check_max=" + check_max_average[  abbr] + " species=" + abbr)
                 max_avg = check_max_average[  abbr]
 
-                display = -10.0
+                display = 1.0 # should be 0, but 1 avoids a bug in the tweening
                 if replicates_average > -10 :
                     #display = replicates_average*100 / (max_avg+0.00001)
                     display = replicates_average*100 / max_avg
