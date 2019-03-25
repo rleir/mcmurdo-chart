@@ -156,7 +156,7 @@ function radialBarChart() {
       segments
         .transition()
         .duration(transitionDuration)
-        .attr('d', d3.svg.arc().innerRadius(0).outerRadius(or).startAngle(sa).endAngle(ea))
+        .attr('d', d3.svg.arc().innerRadius(0).outerRadius(orFunc).startAngle(sa).endAngle(ea))
 
       if(!update)
         renderOverlays(this);
@@ -165,7 +165,7 @@ function radialBarChart() {
   }
 
   /* Arc functions */
-  or = function(d, i) {
+  orFunc = function(d, i) {
     return barScale(d);
   }
   sa = function(d, i) {
