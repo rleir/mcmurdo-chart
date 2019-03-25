@@ -46,9 +46,9 @@ th, td {
   font-size: 14px;
 }
 #chart svg {
-  width: 1799px;
-  height: 887px;
-  background: url("../mcmurdosideways.png") no-repeat;
+  width:  1588px;
+  height: 1037px;
+  background: url("../mcmurdo_map_zag.png") no-repeat;
 }
 
 #chart path {

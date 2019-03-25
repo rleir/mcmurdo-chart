@@ -1,17 +1,18 @@
 'use strict';
 
-var positions = [{"x":150, "y":550, "placeName": "CCN"},
-                 {"x":300, "y":150, "placeName": "WQBI"},
-                 {"x":310, "y":250, "placeName": "WQM"},
-                 {"x":310, "y":310, "placeName": "WQBO"},
-                 {"x":440, "y":410, "placeName": "Out"},
-                 {"x":500, "y":450, "placeName": "OSA"},
-                 {"x":540, "y":450, "placeName": "OSB"},
-                 {"x":650, "y":490, "placeName": "Trans"},
-                 {"x":700, "y":500, "placeName": "Road"},
-                 {"x":800, "y":560, "placeName": "JetN"},
-                 {"x":870, "y":580, "placeName": "JetS"},
-                 {"x":1070,"y":780, "placeName": "CA"}
+var positions = [{"x":100, "y":275, "placeName": "TR"},
+                 {"x":250, "y":430, "placeName": "CCN"},
+                 {"x":620, "y":150, "placeName": "WQBI"},
+                 {"x":630, "y":250, "placeName": "WQM"},
+                 {"x":630, "y":310, "placeName": "WQBO"},
+                 {"x":765, "y":420, "placeName": "Out"},
+                 {"x":835, "y":450, "placeName": "OSA"},
+                 {"x":880, "y":450, "placeName": "OSB"},
+                 {"x":950, "y":490, "placeName": "Trans"},
+                 {"x":1000, "y":500, "placeName": "Road"},
+                 {"x":1160, "y":570, "placeName": "JetN"},
+                 {"x":1230, "y":590, "placeName": "JetS"},
+                 {"x":1455,"y":895, "placeName": "CA"}
                 ];
 var formSelect = d3.select("#year-select");
 var formButton = d3.select("#a-button");
