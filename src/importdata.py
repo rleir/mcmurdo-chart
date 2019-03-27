@@ -16,25 +16,13 @@ import copy
 
 ROW_LIMIT = 8
 all_years = [ ]
+all_sites = [ ]
 
 def chart_by_mapsite(year):
     input_file = 'data/all_sites_' + year + '.csv'
 
     output_file = 'data/chart_by_mapsite_' + year + '.json'
     all_data   = {}
-    all_sites = [ "TR",
-                  "CCN",
-                  "WQBI",
-                  "WQM",
-                  "WQBO",
-                  "Out",
-                  "OSA",
-                  "OSB",
-                  "Trans",
-                  "Road",
-                  "JetN",
-                  "JetS",
-                  "CA"]
 
     # foreach site
     #   foreach organism
@@ -69,8 +57,16 @@ def chart_by_mapsite(year):
 
 def initData():
     global all_years
+    global all_sites
+    positions = [ ]
     with open("data/allyears.json") as json_file:
         all_years= json.load( json_file)
+
+    with open("data/positions.json") as json_file:
+        positions= json.load( json_file)
+    for position in positions:
+        all_sites.append(position['placeName'])
+
 
 if __name__ == "__main__":
     # execute only if run as a script
