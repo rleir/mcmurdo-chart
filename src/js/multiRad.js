@@ -1,19 +1,5 @@
 'use strict';
 
-var positions = [{"x":100, "y":275, "placeName": "TR"},
-                 {"x":250, "y":430, "placeName": "CCN"},
-                 {"x":620, "y":150, "placeName": "WQBI"},
-                 {"x":630, "y":250, "placeName": "WQM"},
-                 {"x":630, "y":310, "placeName": "WQBO"},
-                 {"x":765, "y":420, "placeName": "Out"},
-                 {"x":835, "y":450, "placeName": "OSA"},
-                 {"x":880, "y":450, "placeName": "OSB"},
-                 {"x":950, "y":490, "placeName": "Trans"},
-                 {"x":1000, "y":500, "placeName": "Road"},
-                 {"x":1160, "y":570, "placeName": "JetN"},
-                 {"x":1230, "y":590, "placeName": "JetS"},
-                 {"x":1455,"y":895, "placeName": "CA"}
-                ];
 var formSelect = d3.select("#year-select");
 var formButton = d3.select("#a-button");
 // var formButton = d3.select("#a-button").onclick( function(d){
@@ -23,51 +9,68 @@ document.getElementById("a-button").addEventListener("click", function(event){
     event.preventDefault()
 });
 
-var all_years ;
-d3.json( "data/allyears.json", function(err, data) {
-    all_years = data;
-});
+var positions;
 
+// load some json files, and wait for them to be loaded
+queue()
+    .defer(d3.json, "data/positions.json")
+    .defer(d3.json, "data/allyears.json")
+    .await(analyze);
 
-formButton.on("click", function() {
-    var year = formSelect.node().value;
+function analyze( error, apositions, all_years) {
+    if(error) { console.log(error); }
 
-    //find next in year array
-    // note that this algo does not scale
-    var x=0;
-    var ay_len = all_years.length;
-    while ( all_years[x] != year){
-        x += 1;
-        if(x >= ay_len || x > 100){
-            return;
+    positions = apositions;
+
+    // add options to the selector for all years
+    var min = 0,
+        max = all_years.length - 1,
+        select = formSelect.node();
+
+    for (var i = min; i<=max; i++){
+        var opt = document.createElement('option');
+        var year = all_years[i];
+        opt.value = year;
+        opt.innerHTML = year;
+        select.appendChild(opt);
+    }
+
+    formButton.on("click", function() {
+        var year = formSelect.node().value;
+
+        //find next in year array
+        // note that this algo does not scale
+        var x=0,
+            ay_len = all_years.length;
+        while ( all_years[x] != year){
+            x += 1;
+            if(x >= ay_len || x > 100){
+                return;
+            }
         }
-    }
-    //when end, restart
-    if(x+1 >= ay_len){
-        x=0
-    } else {
-        x=x+1
-    }
-    year = all_years[x];
+        //when end, restart
+        if(x+1 >= ay_len){
+            x=0
+        } else {
+            x=x+1
+        }
+        year = all_years[x];
     
-    // update the selector
-    var e = document.getElementById('year-select');
-    if(e) e.value = year;
+        // update the selector
+        var e = document.getElementById('year-select');
+        if(e) e.value = year;
     
-//    formSelect.value = year;
-//    .property('checked', false)
-    loadData(year);
-});
+        loadData(year);
+    });
 
-formSelect.on("change", function() {
-    var year = this.value;
-//    formSelect.value = year;
-    loadData(year);
-});
+    formSelect.on("change", function() {
+        var year = this.value;
+        loadData(year);
+    });
 
-// the initial load
-loadData(formSelect.node().value);
-
+    // the initial load
+    loadData(formSelect.node().value);
+}
 //locate main svg element
 var svgDoc = d3.select("#chart svg");
 
