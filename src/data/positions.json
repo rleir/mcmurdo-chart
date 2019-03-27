@@ -1,16 +1,16 @@
 [
-    {"x":100, "y":275, "placeName": "TR"},
-    {"x":250, "y":430, "placeName": "CCN"},
-    {"x":620, "y":150, "placeName": "WQBI"},
-    {"x":630, "y":250, "placeName": "WQM"},
-    {"x":630, "y":310, "placeName": "WQBO"},
-    {"x":765, "y":420, "placeName": "Out"},
-    {"x":835, "y":450, "placeName": "OSA"},
-    {"x":880, "y":450, "placeName": "OSB"},
-    {"x":950, "y":490, "placeName": "Trans"},
-    {"x":1000, "y":500, "placeName": "Road"},
-    {"x":1160, "y":570, "placeName": "JetN"},
-    {"x":1230, "y":590, "placeName": "JetS"},
-    {"x":1455,"y":895, "placeName": "CA"}
+    {"x":100, "y":275,  "placeName": "TR",   "fullName": "Turtle Rock -13250 m"},
+    {"x":250, "y":430,  "placeName": "CCN",  "fullName": "Cinder Cones -5000 m"},
+    {"x":620, "y":150,  "placeName": "WQBI", "fullName": "Winter Quarters Bay Inner -330 m"},
+    {"x":630, "y":250,  "placeName": "WQM",  "fullName": "Winter Quarters Bay Middle -200 m"},
+    {"x":630, "y":310,  "placeName": "WQBO", "fullName": "Winter Quarters Bay Outer -170 m"},
+    {"x":765, "y":420,  "placeName": "Out",  "fullName": "Outfall - 0 m"},
+    {"x":835, "y":450,  "placeName": "OSA",  "fullName": "Outfall South A 115 m"},
+    {"x":880, "y":450,  "placeName": "OSB",  "fullName": "Outfall South B 166 m"},
+    {"x":950, "y":490,  "placeName": "Trans","fullName": "Transition 250 m"},
+    {"x":1000, "y":500, "placeName": "Road", "fullName": "Road 290 m"},
+    {"x":1160, "y":570, "placeName": "JetN", "fullName": "Jetty North 420 m"},
+    {"x":1230, "y":590, "placeName": "JetS", "fullName": "Jetty South 434 m"},
+    {"x":1455, "y":895, "placeName": "CA",   "fullName": "CA: 1000 m"}
 ]
 

@@ -37,24 +37,11 @@ featured_species= {
     }
 
 all_years = [ ]
+positions = [ ]
 
 # Site name keys below match the column headers in the input xlsx
-site_names = {
-    "TR":   "Turtle Rock -13250 m",
-    "CCN":  "Cinder Cones -5000 m",
-    "WQBI": "Winter Quarters Bay Inner -330 m",
-    "WQM":    "Winter Quarters Bay Middle -200 m",
-    "WQBO": "Winter Quarters Bay Outer -170 m",
-    "Out":    "Outfall - 0 m",
-    "OSA":    "Outfall South A 115 m",
-    "OSB":    "Outfall South B 166 m",
-    "Trans":  "Transition 250 m",
-    "Road":  "Road 290 m",
-    "JetN": "Jetty North 420 m",
-    "JetS": "Jetty South 434 m",
-    "CA":     "CA: 1000 m"}
+site_keys = []
 
-site_keys = list(site_names.keys())
 species_keys = list(featured_species.keys())
 
 all_data   = {}
@@ -65,6 +52,11 @@ def initData():
     with open("data/allyears.json") as json_file:
         all_years= json.load( json_file)
 
+    with open("data/positions.json") as json_file:
+        positions= json.load( json_file)
+    for position in positions:
+        site_keys.append(position['placeName'])
+        
     for year in all_years:
         all_data[year] = {}
 
