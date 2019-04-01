@@ -122,19 +122,17 @@ function radialBarChart() {
       g = d3.select(this).select('svg g.radial-barchart');
 
       // Layer enter/exit/update
-      var layers = g.selectAll('g.layer')
+      var layers = g.selectAll('g.layer-seg')
         .data(d);
 
       layers
         .enter()
         .append('g')
-        .attr('class', function(d, i) {
-          return 'layer-' + i;
-        })
+        .attr('class', 'layer-seg' )
         .classed('layer', true);
 
       layers.exit().remove();
-
+        
       // Segment enter/exit/update
       var segments = layers
         .selectAll('path')
@@ -158,6 +156,41 @@ function radialBarChart() {
         .duration(transitionDuration)
         .attr('d', d3.svg.arc().innerRadius(0).outerRadius(orFunc).startAngle(sa).endAngle(ea))
 
+      // symbol Layer enter/exit/update
+      var symlays = g.selectAll('.layer-sym') 
+        .data(d);
+
+      symlays
+        .enter()
+        .append('g')
+        .attr('class', 'layer-sym' )
+        .classed('layer', true);
+
+      symlays.exit().remove();
+
+      // Symbol enter/exit/update
+      var symbols = symlays
+        .selectAll('path')
+        .data(function(d) {
+            var m = d3.map(d.data);
+            return m.values(); 
+        });
+
+      symbols
+        .enter()
+        .append('path')
+        .style('fill', 'red');
+
+      symbols.exit().remove();
+
+      symbols
+         .attr('d', d3.svg.symbol().type(d3.symbolCross).size(function(d,i){
+             if(d >= 0){
+                 return 0
+             }else{
+                 return 280
+             }}));
+        
       if(!update)
         renderOverlays(this);
     });
