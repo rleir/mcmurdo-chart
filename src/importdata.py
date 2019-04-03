@@ -15,10 +15,15 @@ import json
 import copy
 
 ROW_LIMIT = 8
-all_years = [ ]
-all_sites = [ ]
 
 def chart_by_mapsite(year):
+    all_sites = [ ]
+    positions = [ ]
+    with open("data/positions.json") as json_file:
+        positions= json.load( json_file)
+    for position in positions:
+        all_sites.append(position['placeName'])
+
     input_file = 'data/all_sites_' + year + '.csv'
 
     output_file = 'data/chart_by_mapsite_' + year + '.json'
@@ -55,26 +60,13 @@ def chart_by_mapsite(year):
     with open(output_file, "w") as fp:
         json.dump(all_data , fp) 
 
-def initData():
-    global all_years
-    global all_sites
-    positions = [ ]
-    with open("data/allyears.json") as json_file:
-        all_years= json.load( json_file)
-
-    with open("data/positions.json") as json_file:
-        positions= json.load( json_file)
-    for position in positions:
-        all_sites.append(position['placeName'])
-
 
 if __name__ == "__main__":
     # execute only if run as a script
 
-    years_with_complete_data=['1988', '2002', '2003', '2004', '2007', '2008', '2009', '2010', '2011']
-
-    #    for year in years_with_complete_data:
-    initData()
-
+    all_years = [ ]
+    with open("data/allyears.json") as json_file:
+        all_years= json.load( json_file)
+        
     for year in all_years:
         chart_by_mapsite(year)

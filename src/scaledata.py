@@ -23,7 +23,7 @@ import csv
 import json
 import glob
 from xlrd import open_workbook
-
+from importdata import chart_by_mapsite
 
 featured_species= {
     "Capitella perarmata": "Capi",
@@ -37,7 +37,6 @@ featured_species= {
     }
 
 all_years = [ ]
-positions = [ ]
 
 # Site name keys below match the column headers in the input xlsx
 site_keys = []
@@ -52,11 +51,12 @@ def initData():
     with open("data/allyears.json") as json_file:
         all_years= json.load( json_file)
 
+    positions = [ ]
     with open("data/positions.json") as json_file:
         positions= json.load( json_file)
     for position in positions:
         site_keys.append(position['placeName'])
-        
+
     for year in all_years:
         all_data[year] = {}
 
@@ -207,6 +207,9 @@ if __name__ == "__main__":
     readFiles()
     scaleData()
     writeFiles()
+
+    for year in all_years:
+        chart_by_mapsite(year)
     
 
 
