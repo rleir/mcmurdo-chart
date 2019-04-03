@@ -7,7 +7,7 @@ Based on Peter Cook's
 
 The positions being charted must be specified in data/positions.json in this format:
 
-[   {"x": 95, "y":275,  "placeName": "TR",   "fullName": "Turtle Rock -13250 m"},
+    [   {"x": 95, "y":275,  "placeName": "TR",   "fullName": "Turtle Rock -13250 m"},
         {"x":250, "y":430,  "placeName": "CCN",  "fullName": "Cinder Cones -5000 m"},
     ...
 
