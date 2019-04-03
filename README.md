@@ -6,18 +6,21 @@ Based on Peter Cook's
  removed .append('svg') l42
 
 The positions being charted must be specified in data/positions.json in this format:
-    [   {"x": 95, "y":275,  "placeName": "TR",   "fullName": "Turtle Rock -13250 m"},
+
+[   {"x": 95, "y":275,  "placeName": "TR",   "fullName": "Turtle Rock -13250 m"},
         {"x":250, "y":430,  "placeName": "CCN",  "fullName": "Cinder Cones -5000 m"},
     ...
 
 The position x,y values are chosen manually at the moment.
 
 The years being charted must be specified in data/allyears.json in this format:
+
     [   "1988",
         "1990",
     ....
 
 The input data is expected to be in a single xlsx spreadsheet of any name located in the data directory:
+
     $ ls data/*.xlsx
     data/inputSomeData.xlsx
 
@@ -32,6 +35,7 @@ The last column must contain a maximum average value for the species. The header
 
 
 Format the data:
+
     $ python scaledata.py
 
 View the visualisation at URL
