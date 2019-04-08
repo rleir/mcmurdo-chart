@@ -22,8 +22,9 @@ __status__ = "Production"
 import csv
 import json
 import glob
-from xlrd import open_workbook
+from xlrd import open_workbook # type: ignore
 from importdata import chart_by_mapsite
+from typing import Dict, List
 
 featured_species= {
     "Capitella perarmata": "Capi",
@@ -36,22 +37,22 @@ featured_species= {
     "Edwardsia meridionalis": "Edwa"
     }
 
-all_years = [ ]
+all_years = [ ] # type: List[ str]
 
 # Site name keys below match the column headers in the input xlsx
-site_keys = []
+site_keys = [] # type: List[ str]
 
 species_keys = list(featured_species.keys())
 
-all_data   = {}
-max_average   = {}
+all_data   = {} # type: Dict
+max_average   = {} # type: Dict
 
-def initData():
+def initData() -> None:
     global all_years
     with open("data/allyears.json") as json_file:
         all_years= json.load( json_file)
 
-    positions = [ ]
+    positions = [ ] # type: List[ Dict[ str,str]]
     with open("data/positions.json") as json_file:
         positions= json.load( json_file)
     for position in positions:
@@ -71,9 +72,9 @@ def initData():
                 all_data[year][site_key][0]["average"][abbr]=-10
 
 
-def readFiles():
+def readFiles() -> None:
     input_files = glob.glob('data/*.xlsx')
-    file_count = 0
+    file_count: int = 0
     for path in input_files:
         file_count += 1
         if file_count > 1 :
@@ -86,7 +87,7 @@ def readFiles():
             shname = sheet.name
             if shname.endswith("ave"):
                 final_av_s_found = 1
-                coltoyear=[]
+                coltoyear=[] # type: List[ str]
                 maxcol = 0
                 for row in range(sheet.nrows):
                     if row == 0:
@@ -119,7 +120,7 @@ def readFiles():
             print("final averages sheet not found in " + path)
 
                                             
-def scaleData():
+def scaleData() -> None:
     running_count = {}
     check_max_average   = {}
 
@@ -163,7 +164,7 @@ def scaleData():
                     display = replicates_average*100 / max_avg
                 all_data[year][site_key][0]["data"][abbr] = display
 
-def writeFiles():
+def writeFiles() -> None:
     for year in all_years:
         # write output
         output_file = "data/all_sites_" + str(year) + ".csv"
@@ -179,7 +180,7 @@ def writeFiles():
                     row_data[site_key] =        all_data[year][site_key][0]["data"][abbr]
                 writer.writerow(row_data)
 
-def readheader(sheet,row):
+def readheader(sheet,row) -> List[str]:
     coltoyear=[]
     for col in range(sheet.ncols):
         colheader = sheet.cell(row,col).value

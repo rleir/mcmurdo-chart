@@ -40,3 +40,13 @@ Format the data:
 
 View the visualisation at URL
 http://localhost/index.html
+
+
+# Development
+
+## Type Checking
+
+Check the source code types:
+
+    $ mypy scaledata.py
+
