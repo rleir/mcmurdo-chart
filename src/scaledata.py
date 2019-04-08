@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Handy utility to reformat some data for use in a d3js chart.
-  read 12 xls files
+  read input xls data file
   find final averages sheet
   allow for different years
   find the rows we want
@@ -21,21 +21,20 @@ __status__ = "Production"
 
 import csv
 import json
-import glob
 from xlrd import open_workbook # type: ignore
 from importdata import chart_by_mapsite
 from typing import Dict, List
 
 # The input spreadsheet might contain more species than we want to display.
 # Here is the way to indicate which species we want to display:
-featured_species = {}
+featured_species = {} # type: Dict[ str, str]
 
 all_years = [ ] # type: List[ str]
 
 # Site name keys below match the column headers in the input xlsx
 site_keys = [] # type: List[ str]
 
-species_keys = list(featured_species.keys())
+species_keys = []
 
 all_data   = {} # type: Dict
 max_average   = {} # type: Dict
@@ -46,9 +45,11 @@ def initData() -> None:
         all_years= json.load( json_file)
 
     global featured_species
+    global species_keys
     with open("data/featured_species.json") as json_file:
         featured_species = json.load( json_file)
-        
+    species_keys = list(featured_species.keys())
+
     positions = [ ] # type: List[ Dict[ str,str]]
     with open("data/positions.json") as json_file:
         positions= json.load( json_file)
@@ -70,14 +71,8 @@ def initData() -> None:
 
 
 def readFiles() -> None:
-    input_files = glob.glob('data/*.xlsx')
-    file_count: int = 0
-    for path in input_files:
-        file_count += 1
-        if file_count > 1 :
-            print("error: expecting one xlsx file, got 2")
-            return
         # read xls, find avg sheet
+        path = "data/SpeciesCounts.xlsx"
         wb = open_workbook(path)
         final_av_s_found = 0
         for sheet in wb.sheets():
@@ -116,7 +111,6 @@ def readFiles() -> None:
         if final_av_s_found == 0 :
             print("final averages sheet not found in " + path)
 
-                                            
 def scaleData() -> None:
     running_count = {}
     check_max_average   = {}

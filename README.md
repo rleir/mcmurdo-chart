@@ -19,10 +19,10 @@ The years being charted must be specified in data/allyears.json in this format:
         "1990",
     ....
 
-The input data is expected to be in a single xlsx spreadsheet of any name located in the data directory:
+The input data is expected to be in a single xlsx spreadsheet SpeciesCounts.xlsx located in the data directory:
 
     $ ls data/*.xlsx
-    data/inputSomeData.xlsx
+    data/SpeciesCounts.xlsx
 
 This spreadsheet must have a header row with header cells each containing a 2 digit year and a position indicator corresponding to a placeName field in positions.json, followed by '-ave'. The 2 digit year must appear in allyears.json. For example, a header cell might be 'TR08-ave' above a column of 2008 data for the position at Turtle Rock.
 
