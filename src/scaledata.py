@@ -26,16 +26,9 @@ from xlrd import open_workbook # type: ignore
 from importdata import chart_by_mapsite
 from typing import Dict, List
 
-featured_species= {
-    "Capitella perarmata": "Capi",
-    "Aphelochaeta sp": "Aphe", 
-    "Galathowenia scotiae": "Gala",
-    "Spiophanes tcherniai": "Spio",
-    "Nototanais dimorphus": "Noto",
-    "Ophryotrocha notialis SUM": "Ophr",
-    "Philomedes spp.": "Phil",
-    "Edwardsia meridionalis": "Edwa"
-    }
+# The input spreadsheet might contain more species than we want to display.
+# Here is the way to indicate which species we want to display:
+featured_species = {}
 
 all_years = [ ] # type: List[ str]
 
@@ -52,6 +45,10 @@ def initData() -> None:
     with open("data/allyears.json") as json_file:
         all_years= json.load( json_file)
 
+    global featured_species
+    with open("data/featured_species.json") as json_file:
+        featured_species = json.load( json_file)
+        
     positions = [ ] # type: List[ Dict[ str,str]]
     with open("data/positions.json") as json_file:
         positions= json.load( json_file)
