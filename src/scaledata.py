@@ -145,7 +145,7 @@ def scaleData() -> None:
                 replicates_average = all_data[year][site_key][0]["average"][abbr]
 
                 if max_average[  abbr] != check_max_average[  abbr]:
-                    print("max_avg="+ max_average[  abbr] + " check_max=" + check_max_average[  abbr] + " species=" + abbr)
+                    print("max_avg="+ str(max_average[  abbr]) + " check_max=" + str(check_max_average[  abbr]) + " species=" + abbr)
                 max_avg = check_max_average[  abbr]
 
                 display = -10.0 # should be 0, but -10 is a flag saying 'no data'
