@@ -10,7 +10,6 @@ function radialBarChart() {
   var tickValues = undefined;
   var colorLabels = false;
   var tickCircleValues = [];
-//  var transitionDuration = 1000;
   var transitionDuration = 500;
 
   // Scales & other useful things
@@ -32,10 +31,6 @@ function radialBarChart() {
 
   function svgRotate(a) {
     return 'rotate('+ +a +')';
-  }
-
-  function svgTranslate(x, y) {
-    return 'translate('+ +x +','+ +y +')';
   }
 
   function initChart(container) {
