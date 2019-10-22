@@ -87,14 +87,14 @@ function ready (err, data) {
                 .barHeight(60)
                 .reverseLayerOrder(true)
                 .barColors([
-                    '#EEB945', // Capi  /Yellow
-                    '#E67323', // Aphe  /orange
-                    '#B66199', // Gala  /mauve
-                    '#9392CB', // Spio  /purple
-                    '#76D9FA', // Noto  /blue
-                    '#ce4b46', // Ophr  /ochre
-                    '#aa79c1', // Phil  /purple
-                    '#9ab661'  // Edwa  /green
+                    'rgb(94, 119, 220)', // Capi
+                    'rgb(145, 193, 228)', // Aphe
+                    'rgb(255, 208, 189)', // Gala
+                    'rgb(247, 105, 123)', // Spio
+                    'rgb(119, 157, 224)', // Noto
+                    'rgb(181, 229, 229)', // Ophr
+                    'rgb(255, 158, 155)', // Phil
+                    'rgb(207, 73, 105)'  // Edwa
                 ])  
                 .domain([0,30])
                 .tickValues([5,10,15,20,25])
